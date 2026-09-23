@@ -160,6 +160,17 @@ header{position:fixed;top:0;left:0;right:0;z-index:100;background:#3168ff}
 @media(min-width:1024px){.about-meta{font-size:16px}}
 .about-meta span{display:flex;align-items:center;gap:8px}
 .about-meta svg{width:16px;height:16px;stroke:#3168ff;flex-shrink:0}
+@media(orientation:landscape) and (max-height:560px){
+.hero{height:calc(100svh - 80px);min-height:0}
+.hero-inner{padding:24px 0 72px;gap:14px}
+.hero-title br{display:none}
+.hero-title{font-size:34px;line-height:1.06;letter-spacing:-.136px}
+.hero-bottom{flex-direction:row;align-items:center;gap:28px;max-width:none}
+.hero-bottom p{font-size:15px;line-height:1.35;max-width:440px}
+.hero-bottom .btn{height:48px;padding:10px 22px;font-size:14px;white-space:nowrap}
+.hero-band{height:52px}
+.hero-pag button.active{width:110px}
+}
 .twocol{background:#fff;padding:56px 0}
 @media(min-width:768px){.twocol{padding:78px 0 74px}}
 .twocol-grid{display:grid;grid-template-columns:1fr;gap:40px}
@@ -246,17 +257,14 @@ header{position:fixed;top:0;left:0;right:0;z-index:100;background:#3168ff}
 .lr-block{padding-bottom:56px}
 @media(min-width:768px){.lr-block{padding-bottom:64px}}
 .lr-grid{display:grid;grid-template-columns:1fr;gap:48px}
-@media(min-width:1024px){
-.lr-grid{grid-template-columns:1fr 1fr;gap:80px}
-.lr-block--rev .lr-text{order:2;padding-left:40px}
-.lr-block--rev .lr-image{order:1}
-.lr-image{padding-left:40px}
-.lr-block--rev .lr-image{padding-left:0;padding-right:40px}
-}
-.lr-text{border-left:1px solid #ecebea;padding-left:22px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:34px}
-.lr-text h3{font-size:32px;font-weight:400;line-height:1.2;letter-spacing:-.128px;margin:0;max-width:440px}
+@media(min-width:1024px) and (max-width:1279px){.lr-grid{grid-template-columns:1fr 1fr;gap:56px}}
+@media(min-width:1280px){.lr-grid{grid-template-columns:1fr 1fr;gap:160px}
+.lr-block--rev .lr-text{order:2}
+.lr-block--rev .lr-image{order:1}}
+.lr-text{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:34px}
+.lr-text h3{font-size:32px;font-weight:400;line-height:1.2;letter-spacing:-.128px;margin:0;width:100%}
 @media(min-width:1024px){.lr-text h3{font-size:56px;line-height:1.2;letter-spacing:-.128px}}
-@media(min-width:1280px){.lr-text h3{font-size:40px;line-height:1.1;letter-spacing:-.16px}}
+@media(min-width:1280px){.lr-text h3{font-size:40px;line-height:1.1;letter-spacing:-.16px;max-width:400px}}
 .lr-text p{font-size:20px;line-height:1.4;letter-spacing:-.08px;max-width:400px;margin:0}
 .lr-image img{width:100%;aspect-ratio:1/1;object-fit:cover}
 .spacer{height:50px}
@@ -330,7 +338,8 @@ header{position:fixed;top:0;left:0;right:0;z-index:100;background:#3168ff}
 .cards-head h2{margin:0}
 .cards-grid{display:grid;grid-template-columns:1fr;gap:44px}
 @media(min-width:768px){.cards-grid{grid-template-columns:repeat(2,1fr);column-gap:40px;row-gap:56px}}
-@media(min-width:1024px){.cards-grid{grid-template-columns:repeat(3,1fr);column-gap:40px;row-gap:70px}}
+@media(min-width:1024px) and (max-width:1279px){.cards-grid{column-gap:24px;row-gap:64px}}
+@media(min-width:1280px){.cards-grid{grid-template-columns:repeat(3,1fr);column-gap:40px;row-gap:70px}}
 .card a{display:block}
 .card__media{position:relative;overflow:hidden}
 .card__media img{width:100%;aspect-ratio:1/1;object-fit:cover;transition:transform .6s ease}
@@ -479,7 +488,7 @@ footer{background:#3168ff;color:#fff}
       <div class="hero-content container">
         <div class="hero-inner">
           <div class="hero-top">
-            <h1 class="hero-title">Build with<br>intent.<br>Ship without<br>compromise.</h1>
+            <h1 class="hero-title">Build with<br> intent.<br> Ship without<br> compromise.</h1>
           </div>
           <div class="hero-bottom">
             <p>Every product carries its own ambitions and constraints, and from the first prompt to the last deploy, I shape a system defined by intent, not by limits.</p>
@@ -493,7 +502,7 @@ footer{background:#3168ff;color:#fff}
       <div class="hero-content container">
         <div class="hero-inner">
           <div class="hero-top">
-            <h1 class="hero-title">Built for what<br>you're building.</h1>
+            <h1 class="hero-title">Built for what<br> you're building.</h1>
           </div>
           <div class="hero-bottom">
             <p>Whether it's a marketplace, a tutor or something no one's built before, the way I work stays the same — the right tools in early, and a vision that survives the process.</p>
@@ -507,7 +516,7 @@ footer{background:#3168ff;color:#fff}
       <div class="hero-content container">
         <div class="hero-inner">
           <div class="hero-top">
-            <h1 class="hero-title">See the system<br>take shape in<br>real time.</h1>
+            <h1 class="hero-title">See the system<br> take shape in<br> real time.</h1>
           </div>
           <div class="hero-bottom">
             <p>Every build ships with a map of how it works — where the data flows, what each agent decides, and how it holds up when the load changes.</p>
