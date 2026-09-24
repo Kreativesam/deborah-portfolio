@@ -124,7 +124,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:100;background:#3168ff}
 .hero-content{position:absolute;inset:0;z-index:2}
 .hero-inner{height:100%;display:flex;flex-direction:column;justify-content:flex-start;gap:117px;padding:40px 0 0}
 @media(min-width:768px){.hero-inner{justify-content:space-between;gap:0;padding:40px 0 24px}}
-@media(min-width:1280px){.hero-inner{padding:74px 0 25px}}
+@media(min-width:1280px){.hero-inner{padding:74px 0 120px}}
 .hero-top{margin-left:0;max-width:none;width:100%}
 @media(min-width:768px){.hero-top{margin-left:52px;width:70vw}}
 @media(min-width:1024px){.hero-top{margin-left:52px;width:calc(80vw - 128px)}}
@@ -138,9 +138,10 @@ header{position:fixed;top:0;left:0;right:0;z-index:100;background:#3168ff}
 @media(min-width:1024px){.hero-bottom{max-width:324px;margin-right:0}}
 @media(min-width:1280px){.hero-bottom{max-width:320px;margin-right:160px}}
 @media(min-width:1600px){.hero-bottom{margin-right:240px}}
+@media(min-width:1280px){.hero-bottom{gap:40px}}
 .hero-bottom p{color:#fff;font-size:20px;font-weight:500;letter-spacing:-.28px;line-height:1.2;margin:0}
 .hero-band{position:absolute;top:100%;left:0;right:0;width:100%;height:66px;background:#fff;z-index:4;display:flex;align-items:center;gap:20px;padding:0 24px}
-@media(min-width:1280px){.hero-band{left:auto;width:560px;padding:0 58px 0 76px}}.hero-pag{display:flex;align-items:center;gap:12px;flex:1}
+@media(min-width:1280px){.hero-band{left:auto;right:0;top:auto;bottom:0;width:560px;height:80px;background:transparent;padding:0 79px 0 76px}.hero-band .hero-pag button{background:rgba(255,255,255,.32)}.hero-band .hero-pag button.active{background:#fff;width:232px}.hero-band .hero-pp{color:#fff}.hero-band .hero-pp svg{fill:#fff}.hero-band .icon-pause rect{fill:#fff}}.hero-pag{display:flex;align-items:center;gap:12px;flex:1}
 .hero-pag button{width:17px;height:4px;background:rgba(0,0,0,.2);transition:width .35s ease;padding:0}
 .hero-pag button.active{width:96px}
 @media(min-width:414px){.hero-pag button.active{width:152px}}
@@ -203,7 +204,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:100;background:#3168ff}
 .fixed-slide__row{display:flex;flex-direction:column;gap:40px}
 @media(min-width:1280px){
 .fixed-slide__row{flex-direction:row;align-items:stretch;gap:0;width:100%;max-width:1600px;margin:0 auto;padding:0 80px;justify-content:space-between}
-.fixed-slide__content{width:auto;max-width:560px;flex:0 1 calc(100vw - 880px);justify-content:space-between;height:min(560px,68svh);gap:0;padding:44px 0 42px}
+.fixed-slide__content{width:auto;max-width:560px;flex:0 1 calc(100vw - 880px);justify-content:space-between;height:min(560px,68svh);gap:0;padding:70px 0 42px}
 .fixed-slide__content p{margin-top:auto}
 .fixed-slide__divider{flex:1 1 auto;width:auto}
 .fixed-slide__image{display:block;width:clamp(520px, calc(25vw + 200px), 560px);height:clamp(520px, calc(25vw + 200px), 560px);flex-shrink:0}
@@ -218,8 +219,8 @@ header{position:fixed;top:0;left:0;right:0;z-index:100;background:#3168ff}
 @media(min-width:1280px){.fixed-slide__content p{max-width:560px}}
 .fixed-slide__divider{display:none}
 @media(min-width:1280px){
-.fixed-slide__divider{width:160px;flex-shrink:0;display:flex;justify-content:center;align-items:center;position:relative}
-.fixed-slide__divider:before{content:"";position:absolute;top:50%;transform:translateY(-50%);width:1px;height:60svh;background:rgba(255,255,255,.25)}
+.fixed-slide__divider{width:160px;flex-shrink:0;display:flex;justify-content:center;align-items:flex-start;position:relative}
+.fixed-slide__divider:before{content:"";position:absolute;top:0;width:1px;height:min(330px,37svh);background:#fff}
 }
 .fixed-slide__image{display:block}
 .fixed-slide__image img{display:block;width:100%;height:100%;object-fit:cover}
@@ -1008,6 +1009,8 @@ footer{background:#3168ff;color:#fff}
       var d = Math.abs(sy) / vh;
       fsSlides[i].style.opacity = Math.max(0, 1 - d * 1.2).toFixed(3);
       fsSlides[i].style.pointerEvents = d < 0.5 ? 'auto' : 'none';
+      var pc = fsSlides[i].querySelector('.fixed-slide__content');
+      if (pc) pc.style.transform = 'translateY(' + (-0.55 * sy) + 'px)';
     }
     var best = Math.round(y / vh);
     fsIndex = best;
