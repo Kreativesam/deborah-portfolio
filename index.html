@@ -156,8 +156,12 @@ header{position:fixed;top:0;left:0;right:0;z-index:100;background:#3168ff}
 /* ---------- PERSONAL INTRO BAND ---------- */
 .about-band{background:#fff;padding:56px 0}
 @media(min-width:768px){.about-band{padding:78px 0 74px}}
-.about-grid{display:grid;grid-template-columns:1fr;gap:40px;align-items:center}
-@media(min-width:1024px){.about-grid{align-items:stretch}.about-text{display:flex;flex-direction:column;gap:0}.about-text .about-meta{margin-top:auto}}
+.about-grid{display:grid;grid-template-columns:1fr;gap:40px;align-items:start}
+@media(min-width:1024px){.about-grid{align-items:stretch;gap:80px}
+.about-text p+p{margin-top:22px}
+.about-photo{position:relative;height:100%;align-self:stretch;min-height:360px}
+.about-photo img{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto}
+.about-text .about-meta{margin-top:38px}}
 @media(min-width:1024px){.about-grid{grid-template-columns:5fr 4fr;gap:80px}}
 .about-photo{order:-1;width:100%}
 @media(min-width:1024px){.about-photo{order:0;width:100%}}
@@ -571,6 +575,7 @@ footer{background:#3168ff;color:#fff}
       <div class="about-text">
         <h2 class="reveal">I'm Deborah Akinsiku.</h2>
         <p class="reveal d1">Freelance developer for AI applications, autonomous agents and workflow automation. I argue about the problem before I write a line of code — and I stay until the system ships: reliable, measured, and built to the tightest tolerances your product demands.</p>
+        <p class="reveal d2">The work spans fintech, logistics and healthcare — from first scoping call to post-launch monitoring. Every engagement gets the same treatment: honest estimates, instrumented releases and documentation a real team can pick up the next morning.</p>
         <div class="about-meta reveal d2">
           <span><svg viewBox="0 0 16 16" fill="none" stroke-width="1.4"><path d="M8 1.5c2.5 0 4.5 2 4.5 4.5 0 3.4-4.5 8.5-4.5 8.5S3.5 9.4 3.5 6c0-2.5 2-4.5 4.5-4.5z"/><circle cx="8" cy="6" r="1.8"/></svg>Akure, Nigeria — remote worldwide</span>
           <span><svg viewBox="0 0 16 16" fill="none" stroke-width="1.4"><circle cx="8" cy="8" r="6.5"/><path d="M8 4.5V8l2.5 1.8"/></svg>Available Q4 2026</span>
