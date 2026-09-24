@@ -191,7 +191,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:100;background:#3168ff}
 @media(min-width:1280px){.fixed-slider__label{top:170px}}
 .fixed-slider__label.fs-forcepin{position:fixed;top:96px;bottom:auto;left:0;right:0;z-index:95;background:#3168ff;box-shadow:0 12px 0 0 #3168ff}
 @media(min-width:1280px){.fixed-slider__label.fs-forcepin{top:170px;box-shadow:none}}
-.fixed-slider__slides{position:absolute;top:0;left:0;right:0;display:flex;flex-direction:column;will-change:transform}
+.fixed-slider__slides{position:absolute;top:0;left:0;right:0;bottom:0;will-change:opacity}
 .fixed-slider__label-in{display:flex;align-items:flex-start;gap:24px}
 .fixed-slider__label h2{font-size:40px;font-weight:400;letter-spacing:-.96px;line-height:1.2;color:#fff;margin:0}
 @media(min-width:768px){.fixed-slider__label h2{max-width:324px}}
@@ -202,7 +202,8 @@ header{position:fixed;top:0;left:0;right:0;z-index:100;background:#3168ff}
 .fixed-arrow:hover{background:#fff;color:#3168ff}
 .fixed-arrow svg{width:22px;height:14px}
 .fixed-slider__slides{display:flex;flex-direction:column}
-.fixed-slide{position:relative;flex:0 0 var(--fsvh, 100vh);height:var(--fsvh, 100vh);display:flex;align-items:center}
+.fixed-slide{position:absolute;inset:0;display:flex;align-items:center;opacity:0;will-change:opacity}
+.fixed-slide:first-child{opacity:1}
 @media(min-width:1280px){
 .fixed-slide{align-items:flex-start;padding:170px 0 60px}
 }
@@ -258,7 +259,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:100;background:#3168ff}
 @media(min-width:1280px){.fixed-slider__reel{display:block}}
 .fixed-slider__reel-col{max-width:1600px;margin:0 auto;padding:0 80px;display:flex;justify-content:flex-end}
 .fixed-slider__reel-frame{width:clamp(520px, calc(25vw + 200px), 560px);height:calc(var(--reel-slice, 260px) * 2 + 60px);margin-top:170px;overflow:hidden}
-.fixed-slider__reel-strip{display:flex;flex-direction:column;gap:60px;will-change:transform}
+.fixed-slider__reel-strip{display:flex;flex-direction:column;gap:60px;will-change:transform;transition:transform .45s cubic-bezier(.4,0,.2,1)}
 .fixed-slider__reel-cell{width:100%;height:var(--reel-slice, 260px);overflow:hidden;flex-shrink:0}
 .fixed-slider__reel-cell img{width:100%;height:215%;object-fit:cover;display:block;will-change:transform}
 .fixed-slider__ticks{display:none}
@@ -1022,28 +1023,22 @@ footer{background:#3168ff;color:#fff}
     fsPinGuard();
     var r = fsSec.getBoundingClientRect();
     var vh = window.innerHeight;
-    var max = (fsSlides.length - 1) * vh;
+    var n = fsSlides.length;
+    var max = (n - 1) * vh;
     var y = Math.max(0, Math.min(max, -r.top));
-    fsWrap.style.transform = 'translateY(' + (-y) + 'px)';
-    for (var i = 0; i < fsSlides.length; i++) {
-      var sy = i * vh - y;
-      var d = Math.abs(sy) / vh;
-      fsSlides[i].style.opacity = Math.max(0, 1 - d * 1.2).toFixed(3);
+    var p = y / vh;
+    for (var i = 0; i < n; i++) {
+      var d = Math.abs(i - p);
+      var op = Math.max(0, Math.min(1, 1 - Math.max(0, d - 0.35) * 3.3));
+      fsSlides[i].style.opacity = op.toFixed(3);
       fsSlides[i].style.pointerEvents = d < 0.5 ? 'auto' : 'none';
       var pc = fsSlides[i].querySelector('.fixed-slide__content');
-      if (pc) pc.style.transform = (window.innerWidth >= 768) ? 'translateY(' + (-0.55 * sy) + 'px)' : '';
+      if (pc) pc.style.transform = '';
     }
-    var best = Math.round(y / vh);
+    var best = Math.max(0, Math.min(n - 1, Math.round(p)));
     fsIndex = best;
     fsTicks.forEach(function(t,k){ t.classList.toggle('active', k===best); });
-    var p = y / vh;
-    if(reelStrip){
-      reelStrip.style.transform = 'translateY(' + (-p * (reelSlice + 60)) + 'px)';
-      for(var i = 0; i < reelCells.length; i++){
-        var t = Math.max(0, Math.min(1, p - i));
-        reelCells[i].style.transform = 'translateY(' + (-t * 1.15 * reelSlice) + 'px)';
-      }
-    }
+    if (reelStrip) reelStrip.style.transform = 'translateY(' + (-best * (reelSlice + 60)) + 'px)';
   }
   window.addEventListener('scroll', function(){ requestAnimationFrame(fsUpdate); }, {passive:true});
   window.addEventListener('resize', function(){ fsReelSize(); fsUpdate(); });
