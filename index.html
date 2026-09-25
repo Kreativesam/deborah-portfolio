@@ -990,7 +990,7 @@ footer{background:#3168ff;color:#fff}
     fsIndex = Math.max(0, Math.min(fsSlides.length - 1, i));
     if(window.innerWidth < 768){ fsShow(fsIndex); return; }
     var r = fsSec.getBoundingClientRect();
-    var target = window.pageYOffset + r.top + window.innerHeight * fsIndex;
+    var target = window.pageYOffset + r.top + window.innerHeight * 0.65 * fsIndex;
     window.scrollTo({ top: target, behavior:'smooth' });
   }
   var reelFrame = document.getElementById('fsReelFrame');
@@ -1001,7 +1001,7 @@ footer{background:#3168ff;color:#fff}
   function fsReelSize(){
     document.documentElement.style.setProperty('--fsvh', window.innerHeight + 'px');
     var vh = window.innerHeight;
-    if(fsSec) fsSec.style.height = window.innerWidth < 768 ? '' : ((fsSlides.length + 1) * vh) + 'px';
+    if(fsSec) fsSec.style.height = window.innerWidth < 768 ? '' : Math.round(((fsSlides.length - 1) * 0.65 + 1.6) * vh) + 'px';
     if(!reelFrame) return;
     reelSlice = Math.max(120, Math.min(Math.round(reelFrame.clientWidth * 0.464), Math.round((window.innerHeight - 290) / 2)));
     reelFrame.style.setProperty('--reel-slice', reelSlice + 'px');
@@ -1048,22 +1048,24 @@ footer{background:#3168ff;color:#fff}
     var r = fsSec.getBoundingClientRect();
     var vh = window.innerHeight;
     var n = fsSlides.length;
-    var pin = (n - 1) * vh;
+    var STEP = 0.65 * vh;
+    var pin = (n - 1) * STEP;
     var box = fsBoxEl || (fsBoxEl = document.querySelector('.fixed-slider__sticky'));
     var y = vh - r.top;
-    var opSec = Math.min(Math.min(1, (y - 0.4 * vh) / (0.6 * vh)), Math.max(0, 1 - (y - 1.4 * vh - pin) / (0.6 * vh)));
+    var opSec = Math.min(Math.min(1, (y - 0.2 * vh) / (0.8 * vh)), Math.max(0, 1 - (y - 1.8 * vh - pin) / (0.8 * vh)));
     fsSec.style.backgroundColor = 'rgba(49,104,255,' + opSec.toFixed(3) + ')';
     if (box) {
       box.style.opacity = opSec.toFixed(3);
       box.style.visibility = opSec > 0.004 ? 'visible' : 'hidden';
       box.style.pointerEvents = opSec > 0.85 ? 'auto' : 'none';
     }
-    var p = Math.max(0, Math.min(n - 1, (y - vh) / vh));
+    var p = Math.max(0, Math.min(n - 1, (y - vh) / STEP));
     for (var i = 0; i < n; i++) {
       var d = Math.abs(i - p);
       var op = Math.max(0, 1 - 2 * d);
       fsSlides[i].style.opacity = op.toFixed(3);
       fsSlides[i].style.pointerEvents = (d < 0.4 && opSec > 0.85) ? 'auto' : 'none';
+      fsSlides[i].style.transform = 'translateY(' + ((i - p) * 42).toFixed(1) + 'px)';
       var pc = fsSlides[i].querySelector('.fixed-slide__content');
       if (pc) pc.style.transform = '';
     }
@@ -1081,11 +1083,12 @@ footer{background:#3168ff;color:#fff}
   function fsSettle(){
     var vh = window.innerHeight;
     var r = fsSec.getBoundingClientRect();
-    var off = window.pageYOffset - (window.pageYOffset + r.top);
-    var pin = (fsSlides.length - 1) * vh;
-    if (off < -0.5 * vh || off > pin + 0.5 * vh) return;
-    var idx = Math.max(0, Math.min(fsSlides.length - 1, Math.round(off / vh)));
-    var target = window.pageYOffset + r.top + vh * idx;
+    var off = -r.top;
+    var STEP = 0.65 * vh;
+    var pin = (fsSlides.length - 1) * STEP;
+    if (off < -0.45 * STEP || off > pin + 0.45 * STEP) return;
+    var idx = Math.max(0, Math.min(fsSlides.length - 1, Math.round(off / STEP)));
+    var target = window.pageYOffset + r.top + STEP * idx;
     if (Math.abs(target - window.pageYOffset) < 6) return;
     fsSettling = true;
     window.scrollTo({ top: target, behavior: 'smooth' });
